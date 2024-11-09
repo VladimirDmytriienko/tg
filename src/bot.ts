@@ -10,6 +10,7 @@ bot.start(handleStart);
 
 
 bot.on('message', async (ctx) => {
+    console.log(ctx?.message?.chat);
     const url = (ctx.message as any)?.text || '';
     const videoId = parser(url);
 
