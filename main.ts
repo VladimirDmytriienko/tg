@@ -2,7 +2,6 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import bot from './src/bot';
 import http from 'http';
-import https from 'https';
 
 const port = process.env.PORT || 3000;
 
