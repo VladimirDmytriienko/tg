@@ -2,7 +2,7 @@ import { Telegraf, Context } from 'telegraf';
 import { handleStart } from './commands/start';
 import { generatorLink } from './services/generatorLink';
 import { parser } from './services/parser';
-
+const port = process.env.PORT || 3000;
 const bot = new Telegraf<Context>(process.env.BOT_API_KEY as string);
 
 
