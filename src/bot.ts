@@ -20,7 +20,8 @@ bot.on('message', async (ctx) => {
         if (audioUrl) {
             await ctx.replyWithAudio({ url: audioUrl });
         } else {
-            await ctx.reply('Sorry, could not fetch audio link.');
+            
+            await ctx.reply('Sorry, could not fetch audio link. ' + ' ' + audioUrl);
         }
     } else {
         await ctx.reply('Please send a valid YouTube video link.');
