@@ -20,7 +20,7 @@ bot.on('message', async (ctx) => {
         if (audioUrl) {
             await ctx.replyWithAudio(
                 { url: audioUrl },
-                { caption: '@@songFetcher_bot' }
+                { caption: '@songFetcher_bot' }
             );
         } else {
             
