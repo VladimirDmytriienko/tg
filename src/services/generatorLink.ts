@@ -1,41 +1,33 @@
 import https from 'https';
-import { IncomingMessage } from 'http';
 
 export async function generatorLink(videoId: string): Promise<string> {
-    return new Promise((resolve) => {
-        const options = {
-            hostname: 'youtube-mp36.p.rapidapi.com',
-            path: `/dl?id=${videoId}`,
-            method: 'GET',
-            headers: {
-                'X-RapidAPI-Key': process.env.RAPIDAPI_KEY as string,
-                'X-RapidAPI-Host': 'youtube-mp36.p.rapidapi.com'
-            }
-        };
+    const options = {
+        hostname: 'youtube-mp36.p.rapidapi.com',
+        path: `/dl?id=${videoId}`,
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': process.env.RAPIDAPI_KEY as string,
+            'X-RapidAPI-Host': 'youtube-mp36.p.rapidapi.com'
+        }
+    };
 
-        const req = https.request(options, (res: IncomingMessage) => {
+    return new Promise((resolve, reject) => {
+        https.get(options, (res) => {
             let data = '';
 
-            res.on('data', (chunk: any) => {
-                data += chunk;
-            });
-
+            res.on('data', (chunk) => (data += chunk));
             res.on('end', () => {
                 try {
                     const parsedData = JSON.parse(data);
                     resolve(parsedData.link || '');
                 } catch (error) {
                     console.error('Error parsing response:', error);
-                    resolve('');
+                    reject(error);
                 }
             });
+        }).on('error', (error) => {
+            console.error('Request error:', error);
+            reject(error);
         });
-
-        req.on('error', (error: Error) => {
-            console.error('Error making request:', error);
-            resolve('');
-        });
-
-        req.end();
     });
 }
