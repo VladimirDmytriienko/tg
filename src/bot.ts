@@ -18,7 +18,10 @@ bot.on('message', async (ctx) => {
         await ctx.sendChatAction('upload_voice');
         const audioUrl = await generatorLink(videoId);
         if (audioUrl) {
-            await ctx.replyWithAudio({ url: audioUrl });
+            await ctx.replyWithAudio(
+                { url: audioUrl },
+                { caption: '@@songFetcher_bot' }
+            );
         } else {
             
             await ctx.reply('Sorry, could not fetch audio link. ' + ' ' + audioUrl);
