@@ -1,5 +1,14 @@
 export function parser(url: string): string | false {
-    const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[7].length === 11) ? match[7] : false;
+    try {
+        const urlObj = new URL(url);
+        if (urlObj.hostname.includes('youtu.be')) {
+            return urlObj.pathname.substring(1);
+        }
+        if (urlObj.hostname.includes('youtube.com') && urlObj.searchParams.has('v')) {
+            return urlObj.searchParams.get('v') || false;
+        }
+    } catch {
+        return false;
+    }
+    return false;
 }

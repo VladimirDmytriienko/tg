@@ -11,6 +11,9 @@ bot.start(handleStart);
 
 bot.on('message', async (ctx) => {
     console.log(ctx?.message?.chat);
+    if (!('text' in ctx.message)) {
+        return ctx.reply('Please send a valid YouTube video link.');
+    }
     const url = (ctx.message as any)?.text || '';
     const videoId = parser(url);
 
